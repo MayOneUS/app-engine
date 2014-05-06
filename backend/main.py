@@ -22,7 +22,7 @@ def send_thank_you(name, email, url_nonce, amount_cents):
   """ Deferred email task """
 
   sender = 'MayOne no-reply <noreply@mayday-pac.appspotmail.com>'
-  subject = 'Thank you for your pledge'
+  subject = 'Thank you for your pledge!'
   message = mail.EmailMessage(sender=sender, subject=subject)
   message.to = email
 
