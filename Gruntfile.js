@@ -97,7 +97,7 @@ module.exports = function(grunt) {
 
     shell: {
       devserver: {
-        command: 'dev_appserver.py --host 0.0.0.0 --admin_host 0.0.0.0 build/',
+        command: 'echo "n" | dev_appserver.py --host 0.0.0.0 --admin_host 0.0.0.0 build/',
         options: {
           async: true,
         },
