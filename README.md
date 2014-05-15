@@ -33,7 +33,7 @@ Dependencies
 ------------
 * Python App Engine SDK
 * NPM
-* sass (with ruby installed, `gem install sass`)
+* sass (with ruby installed, `bundle install`)
 
 Hacking
 -------
