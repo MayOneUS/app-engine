@@ -48,6 +48,29 @@ def send_thank_you(name, email, url_nonce, amount_cents):
   message.html = open('email/thank-you.html').read().format(**format_kwargs)
   message.send()
 
+class ContactUsHandler(webapp2.RequestHandler):
+  def post(self):
+    data = json.loads(self.request.body)
+    sender = data["name"] + " <" + data["email"] + ">";
+    message = mail.EmailMessage(sender=sender, subject=data['subject'])
+    message.to = "info@mayone.us"
+    message.body = data['body']
+    message.send()
+    logging.info("Contact from: " + sender + "; regarding " + data['subject'])
+    _origin = self.request.headers['Origin']
+    self.response.headers.add_header("Access-Control-Allow-Origin", _origin)
+    self.response.headers.add_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+    self.response.headers.add_header("Access-Control-Allow-Credentials", "true")
+    self.response.headers.add_header("Access-Control-Allow-Headers", "authorization, origin, x-requested-with, content-type, accept")
+    self.response.write('Ok.')
+
+  def options(self):
+    _origin = self.request.headers['Origin']
+    self.response.headers.add_header("Access-Control-Allow-Origin", _origin)
+    self.response.headers.add_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+    self.response.headers.add_header("Access-Control-Allow-Credentials", "true")
+    self.response.headers.add_header("Access-Control-Allow-Headers", "authorization, origin, x-requested-with, content-type, accept")
+    self.response.write('Ok.')
 
 class GetTotalHandler(webapp2.RequestHandler):
   def get(self):
@@ -182,7 +205,8 @@ app = webapp2.WSGIApplication([
   ('/stripe_public_key', GetStripePublicKeyHandler),
   ('/pledge.do', PledgeHandler),
   ('/user-update/(\w+)', UserUpdateHandler),
-  ('/campaigns/may-one/?', EmbedHandler)
+  ('/campaigns/may-one/?', EmbedHandler),
+  ('/contact.us', ContactUsHandler),
   # See wp_import
   # ('/import.do', wp_import.ImportHandler),
 ], debug=False)
