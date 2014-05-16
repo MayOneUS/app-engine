@@ -57,8 +57,20 @@ class ContactUsHandler(webapp2.RequestHandler):
     message.body = data['body']
     message.send()
     logging.info("Contact from: " + sender + "; regarding " + data['subject'])
+    _origin = self.request.headers['Origin']
+    self.response.headers.add_header("Access-Control-Allow-Origin", _origin)
+    self.response.headers.add_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+    self.response.headers.add_header("Access-Control-Allow-Credentials", "true")
+    self.response.headers.add_header("Access-Control-Allow-Headers", "authorization, origin, x-requested-with, content-type, accept")
     self.response.write('Ok.')
 
+  def options(self):
+    _origin = self.request.headers['Origin']
+    self.response.headers.add_header("Access-Control-Allow-Origin", _origin)
+    self.response.headers.add_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+    self.response.headers.add_header("Access-Control-Allow-Credentials", "true")
+    self.response.headers.add_header("Access-Control-Allow-Headers", "authorization, origin, x-requested-with, content-type, accept")
+    self.response.write('Ok.')
 
 class GetTotalHandler(webapp2.RequestHandler):
   def get(self):
