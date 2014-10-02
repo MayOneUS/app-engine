@@ -226,6 +226,7 @@ var createPledge = function(name, payment) {
     employer: $('#employer_input').val(),
     target: $('#targeting_input').val(),
     subscribe: $('#emailSignupInput').is(':checked') ? true : false,
+    recurring: $('#recurring').is('checked') ? true: false,
     // anonymous: $scope.ctrl.form.anonymous,
     amountCents: getAmountCents(),
     pledgeType: pledgeType,

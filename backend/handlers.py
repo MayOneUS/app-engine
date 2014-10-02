@@ -264,6 +264,10 @@ class PledgeHandler(webapp2.RequestHandler):
       self.response.write('Invalid request')
       return
 
+    # Is payment recurring
+
+    recurring = data['recurring']
+
     # Do any server-side processing the payment processor needs.
     stripe_customer_id = None
     stripe_charge_id = None
